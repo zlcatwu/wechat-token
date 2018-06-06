@@ -14,10 +14,18 @@
 * 提供主动刷新`access_token`的接口
 * 定时刷新`access_token`
 
-## 如何使用
+## 如何运行
 
 * `yarn` 或 `npm install`进行依赖安装
 * 在`config/apps.json`中填入需要管理的应用对应的`appid`与`appsecret`
 * 在`config/default.json`中填入相应的设置
 * `tsc`进行编译
 * `npm run start`
+
+## 接口
+
+| URL                 | METHOD | RECEIVE            | RETURN      | DESC                         |
+| ------------------- | ------ | ------------------ | ----------- | ---------------------------- |
+| `/access_token`     | GET    | `appid, appsecret` | `{ token }` | 获取`access_token`           |
+| `/new_access_token` | GET    | `appid, appsecret` | `{ token }` | 刷新并获取新的`access_token` |
+
