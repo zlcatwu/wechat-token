@@ -1,0 +1,31 @@
+{
+  "name": "wechat-token-cluster",
+  "version": "1.0.0",
+  "description": "微信管理 access_token 的中控服务器，可以以集群形式运行。",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/serve.js"
+  },
+  "author": "zlcatwu<zlcatwu@163.com>",
+  "license": "GPL",
+  "dependencies": {
+    "koa": "^2.5.1",
+    "koa-body": "^2.5.0",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^7.4.0",
+    "koa-validate": "^1.0.7",
+    "redis": "^2.8.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.45",
+    "@types/koa-morgan": "^1.0.4",
+    "@types/koa-router": "^7.0.28",
+    "@types/redis": "^2.8.6",
+    "@types/request": "^2.47.0",
+    "@types/request-promise": "^4.1.41",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}
