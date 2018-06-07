@@ -2,9 +2,11 @@
 
 ## 简介
 
-微信小程序/公众号开发中管理`access_token`的中控服务器，该版本为集群版本，可使用集群部署。
+微信小程序/公众号开发中管理`access_token`的中控服务器，该版本为集群版本，可使用集群部署
 
-**程序中使用到了 redis ，运行时请保证 redis 的正常运行。**
+**程序中使用到了 redis ，运行时请保证 redis 的正常运行**
+
+如果不需要集群部署，可以使用单节点版本[wechat-token](https://github.com/zlcatwu/wechat-token.git)
 
 ~~但是性能好像不是很好~~
 
