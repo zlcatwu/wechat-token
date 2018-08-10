@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as util from 'util';
 import config from './config';
+import { clientAsync } from './redis';
 
 export class APIError {
   constructor(public code: string, public message: string) {}
@@ -47,3 +48,15 @@ export class Dispatcher {
 
 export const readFileAsync = util.promisify(fs.readFile);
 export const delayAsync = (seconds: number) => util.promisify(setTimeout)(seconds);
+
+export const getLock = async (name: string, time: number) => {
+  const key = `lock-${name}`;
+  const isSuccess = Boolean(await clientAsync.setnxAsync(key, ''));
+  if (isSuccess) { await clientAsync.expireAsync(key, time); }
+  return isSuccess;
+};
+
+export const releaseLock = async (name: string) => {
+  const key = `lock-${name}`;
+  return Boolean(await clientAsync.delAsync(key));
+};

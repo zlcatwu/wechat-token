@@ -1,38 +1,27 @@
+import * as bluebird from 'bluebird';
 import * as redis from 'redis';
-import * as util from 'util';
 import config from './config';
 
-export const client = redis.createClient({
+interface RedisAsync {
+  setAsync(key: string, value: string): Promise<"OK">;
+  setexAsync(key: string, seconds: number, value: string): Promise<string>;
+  setnxAsync(key: string, value: string): Promise<number>;
+  saddAsync(key: string, value: string | string[]): Promise<number>;
+  spopAsync(key: string): Promise<string>;
+  scardAsync(key: string): Promise<number>;
+  getAsync(key: string): Promise<string>;
+  delAsync(key: string): Promise<number>;
+  existsAsync(key: string): Promise<number>;
+  expireAsync(key: string, seconds: number): Promise<number>;
+  incrAsync(key: string): Promise<number>;
+}
+
+bluebird.promisifyAll(redis);
+const options = {
   host: config.REDIS.host,
   password: config.REDIS.pass || undefined,
   port: config.REDIS.port,
-});
-export const sub = redis.createClient();
-export const pub = redis.createClient();
-
-export const expireAsync = util.promisify(client.expire);
-export const setAsync = util.promisify(client.set);
-export const getAsync = util.promisify(client.get);
-export const setnxAsync = util.promisify(client.setnx);
-export const publishAsync = util.promisify(client.publish);
-// 以下函数不符合 util.promisify 的要求，故需另外封装
-const delAsync = (key: string) => {
-  return new Promise((resolve, reject) => {
-    client.del(key, (err, reply) => {
-      if (err) { return reject(err); }
-      resolve(reply);
-    });
-  });
 };
-
-export const getLock = async (name: string) => {
-  const key = `lock-${name}`;
-  const isSuccess = Boolean(await setnxAsync.call(client, key, ''));
-  if (isSuccess) { await expireAsync.bind(client)(key, 30); }
-  return isSuccess;
-};
-
-export const releaseLock = async (name: string) => {
-  const key = `lock-${name}`;
-  return Boolean(await delAsync(key));
-};
+export const subClient = redis.createClient(options);
+export const pubClient = redis.createClient(options);
+export const clientAsync: RedisAsync = redis.createClient(options) as any;

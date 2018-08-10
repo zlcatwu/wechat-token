@@ -17,7 +17,6 @@ const getTokenAsync = (wechatInfo: WechatInfo) => {
       resolve(token);
     })
       .catch((err) => {
-        console.log(err);
         reject(err);
       });
   });
@@ -30,7 +29,6 @@ const refreshTokenAsync = (wechatInfo: WechatInfo) => {
       resolve(token);
     })
       .catch((err) => {
-        console.log(err);
         reject(err);
       });
   });
