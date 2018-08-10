@@ -6,15 +6,13 @@
 
 **程序中使用到了 redis ，运行时请保证 redis 的正常运行**
 
-如果不需要集群部署，可以使用单节点版本[wechat-token](https://github.com/zlcatwu/wechat-token.git)
-
-~~但是性能好像不是很好~~
 
 ## 实现功能
 
 * 多个`access_token`的管理
 * 提供主动刷新`access_token`的接口
 * 定时刷新`access_token`
+* 初始化时自动进行一次获取
 
 ## 如何运行
 
@@ -28,6 +26,6 @@
 
 | URL                 | METHOD | RECEIVE            | RETURN      | DESC                         |
 | ------------------- | ------ | ------------------ | ----------- | ---------------------------- |
-| `/access_token`     | GET    | `appid, appsecret` | `{ token }` | 获取`access_token`           |
-| `/new_access_token` | GET    | `appid, appsecret` | `{ token }` | 刷新并获取新的`access_token` |
+| `/access_token`     | GET    | `appid, appsecret` | `{ token, time }` | 获取`access_token`与其剩余有效时间(s)           |
+| `/new_access_token` | GET    | `appid, appsecret` | `{ token, time }` | 刷新并获取新的`access_token`与其剩余有效时间(s) |
 
